@@ -14,7 +14,7 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public List<Client> findAll(Long id) {
+    public List<Client> findAllClients() {
         return clientRepository.findAll();
     }
 

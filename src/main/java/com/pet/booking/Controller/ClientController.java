@@ -4,8 +4,10 @@ import com.pet.booking.Entity.Client;
 import com.pet.booking.Service.ClientService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping
+@RequestMapping("/clients")
 public class ClientController {
 
     private final ClientService clientService;
@@ -14,24 +16,24 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @GetMapping("/clients")
-    public String showClientPage() {
-        return "client";
+    @GetMapping
+    public List<Client> getAllClients() {
+        return clientService.findAllClients();
     }
 
-    @PostMapping("/clients")
+    @PostMapping
     public @ResponseBody String addNewClient(@RequestParam String name,
                                @RequestParam String contact) {
 
        return addNewClient(name, contact);
     }
 
-    @GetMapping("/clients/{id}")
+    @GetMapping("/{id}")
     public @ResponseBody Client getClientById(@PathVariable Long id){
         return  clientService.findById(id);
     }
 
-    @DeleteMapping("/clients/delete")
+    @DeleteMapping("/delete")
     public void deleteClient(@PathVariable Long id) {
         clientService.deleteClient(id);
     }
