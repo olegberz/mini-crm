@@ -3,6 +3,7 @@ package com.pet.booking.Service;
 import com.pet.booking.Entity.Client;
 import com.pet.booking.Repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,13 +20,18 @@ public class ClientService {
     }
 
     public Client findById(Long id) {
-            return  clientRepository.findById(id).orElse(new Client());
+        return clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Client not found"));
     }
 
     @Transactional
-    public Client save(Client client){
+    public Client createClient(String name, String contact) {
+        Client client = new Client();
+        client.setName(name);
+        client.setContact(contact);
         return clientRepository.save(client);
     }
+
 
     @Transactional
     public void deleteClient(Long id) {

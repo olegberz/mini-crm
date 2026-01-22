@@ -22,18 +22,19 @@ public class ClientController {
     }
 
     @PostMapping
-    public @ResponseBody String addNewClient(@RequestParam String name,
+    public Client addNewClient(@RequestParam String name,
                                @RequestParam String contact) {
-
-       return addNewClient(name, contact);
+        return clientService.createClient(name, contact);
     }
+
+
 
     @GetMapping("/{id}")
     public @ResponseBody Client getClientById(@PathVariable Long id){
         return  clientService.findById(id);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/{id}")
     public void deleteClient(@PathVariable Long id) {
         clientService.deleteClient(id);
     }
