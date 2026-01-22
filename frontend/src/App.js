@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [clients, setClients] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/clients")
+            .then(response => response.json())
+            .then(data => setClients(data))
+            .catch(error => console.error(error));
+    }, []);
+
+    return (
+        <div>
+            <h1>Clients</h1>
+
+            <ul>
+                {clients.map(client => (
+                    <li key={client.id}>
+                        {client.name} — {client.contact}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
 
 export default App;
