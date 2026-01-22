@@ -1,9 +1,9 @@
 package com.pet.booking.Service;
 
+import com.pet.booking.DTO.ClientCreateDTO;
 import com.pet.booking.Entity.Client;
 import com.pet.booking.Repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,10 +25,10 @@ public class ClientService {
     }
 
     @Transactional
-    public Client createClient(String name, String contact) {
+    public Client createClient(ClientCreateDTO createDTO) {
         Client client = new Client();
-        client.setName(name);
-        client.setContact(contact);
+        client.setName(createDTO.getName());
+        client.setContact(createDTO.getContact());
         return clientRepository.save(client);
     }
 

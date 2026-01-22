@@ -1,5 +1,6 @@
 package com.pet.booking.Controller;
 
+import com.pet.booking.DTO.ClientCreateDTO;
 import com.pet.booking.Entity.Client;
 import com.pet.booking.Service.ClientService;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +23,8 @@ public class ClientController {
     }
 
     @PostMapping
-    public Client addNewClient(@RequestParam String name,
-                               @RequestParam String contact) {
-        return clientService.createClient(name, contact);
+    public Client addNewClient(@RequestBody ClientCreateDTO createDTO) {
+        return clientService.createClient(createDTO);
     }
 
 
