@@ -1,7 +1,7 @@
 package com.pet.booking.Controller;
 
 import com.pet.booking.DTO.ClientResponseDTO;
-import com.pet.booking.DTO.clientCreateDTO;
+import com.pet.booking.DTO.ClientCreateDTO;
 import com.pet.booking.Entity.Client;
 import com.pet.booking.Service.ClientService;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public Client addNewClient(@RequestBody clientCreateDTO createDTO) {
+    public Client addNewClient(@RequestBody ClientCreateDTO createDTO) {
         return clientService.createClient(createDTO);
     }
 
@@ -35,10 +35,14 @@ public class ClientController {
         return new ClientResponseDTO(client.getId(), client.getName(), client.getContact());
     }
 
-
     @DeleteMapping("/{id}")
     public void deleteClient(@PathVariable Long id) {
         clientService.deleteClient(id);
+    }
+
+    @PutMapping("/{id}")
+    public Client updateClient(@PathVariable Long id, @RequestBody ClientCreateDTO createDTO) {
+        return clientService.updateClient(id, createDTO);
     }
 
 }
