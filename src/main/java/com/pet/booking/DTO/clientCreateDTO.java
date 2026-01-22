@@ -1,13 +1,13 @@
 package com.pet.booking.DTO;
 
-public class ClientCreateDTO {
+public class clientCreateDTO {
     private String name;
     private String contact;
 
-    public ClientCreateDTO() {
+    public clientCreateDTO() {
     }
 
-    public ClientCreateDTO(String name, String contact) {
+    public clientCreateDTO(String name, String contact) {
         this.name = name;
         this.contact = contact;
     }
