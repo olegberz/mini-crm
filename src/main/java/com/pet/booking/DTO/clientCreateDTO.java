@@ -1,7 +1,14 @@
 package com.pet.booking.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class ClientCreateDTO {
+    @NotBlank
+    @Size(min = 2, max = 12, message = "Name can't be longer than 12 letters")
     private String name;
+    @NotBlank
+    @Size(min = 2, max = 24)
     private String contact;
 
     public ClientCreateDTO() {

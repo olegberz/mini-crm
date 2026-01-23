@@ -26,6 +26,17 @@ function App() {
             return;
         }
 
+        if (name.length < 2 || name.length > 12) {
+            alert("Name can't be shorter then 2 letters, or longer than 12")
+            return;
+        }
+
+        if (contact.length < 2 || contact.length > 24) {
+            alert("Contact can't be shorter then 2, or longer than ")
+            return;
+        }
+
+
         if (editingId) {
             updateClient(editingId, { name, contact }).then(updated => {
                 setClients(clients.map(c => c.id === updated.id ? updated : c));

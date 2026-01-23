@@ -1,8 +1,10 @@
 package com.pet.booking.DTO;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class ClientResponseDTO {
     private Long id;
-
     private String name;
     private String contact;
 
