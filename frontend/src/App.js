@@ -1,61 +1,93 @@
-import {getAllClients, createClient, deleteClient} from "./ClientService";
-import {useEffect, useState} from "react";
+import { getAllClients, createClient, deleteClient, updateClient } from "./ClientService";
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
     const [clients, setClients] = useState([]);
     const [name, setName] = useState("");
     const [contact, setContact] = useState("");
+    const [editingId, setEditingId] = useState(null);
 
     useEffect(() => {
         getAllClients()
-            .then(data => setClients(data))
-            .catch(error => console.error(error));
+            .then(setClients)
+            .catch(console.error);
     }, []);
-    const [, set] = useState();
-    function handleCreateClient() {
-        createClient({ name, contact })
-            .then(newClient => {
-                setClients([...clients, newClient]);
-                setName("");
-                setContact("");
-            });
+
+    function resetForm() {
+        setName("");
+        setContact("");
+        setEditingId(null);
     }
 
+    function handleSubmit() {
+        if (!name.trim() || !contact.trim()) {
+            alert("Fields can't be empty");
+            return;
+        }
 
-    function handleDeleteClient(id) {
+        if (editingId) {
+            updateClient(editingId, { name, contact }).then(updated => {
+                setClients(clients.map(c => c.id === updated.id ? updated : c));
+                resetForm();
+            });
+        } else {
+            createClient({ name, contact }).then(newClient => {
+                setClients([...clients, newClient]);
+                resetForm();
+            });
+        }
+    }
+
+    function handleEdit(client) {
+        setEditingId(client.id);
+        setName(client.name);
+        setContact(client.contact);
+    }
+
+    function handleDelete(id) {
         deleteClient(id).then(() => {
-            setClients(clients.filter(client => client.id !== id));
+            setClients(clients.filter(c => c.id !== id));
         });
     }
 
-
     return (
-        <div style={{ padding: "20px" }}>
+        <div className="container">
             <h1>Clients</h1>
 
-            <h2>Add client</h2>
+            <div className="form">
+                <h2>{editingId ? "Edit client" : "Add client"}</h2>
+                <input
+                    placeholder="Name"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                />
+                <input
+                    placeholder="Contact"
+                    value={contact}
+                    onChange={e => setContact(e.target.value)}
+                />
+                <button className="main" onClick={handleSubmit}>
+                    {editingId ? "Update" : "Add"}
+                </button>
+                {editingId && (
+                    <button className="cancel" onClick={resetForm}>
+                        Cancel
+                    </button>
+                )}
+            </div>
 
-            <input
-                placeholder="Name"
-                value={name}
-                onChange={e => setName(e.target.value)}
-            />
-
-            <input
-                placeholder="Contact"
-                value={contact}
-                onChange={e => setContact(e.target.value)}
-            />
-
-            <button onClick={handleCreateClient}>Add</button>
-
-            <hr />
-
-            <ul>
+            <ul className="clients-list">
                 {clients.map(client => (
-                    <li key={client.id}>
-                        {client.name} — {client.contact}
-                        <button onClick={() => handleDeleteClient(client.id)}>❌</button>
+                    <li key={client.id} className="client-card">
+                        <div>
+                            <strong>{client.name}</strong>
+                            <div>{client.contact}</div>
+                        </div>
+                        <div className="actions">
+                            <button onClick={() => handleEdit(client)}>Edit</button>
+                            <button className="delete" onClick={() => handleDelete(client.id)}>❌</button>
+                        </div>
                     </li>
                 ))}
             </ul>

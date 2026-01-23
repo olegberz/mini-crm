@@ -15,6 +15,16 @@ export function createClient(client) {
     }).then(response => response.json());
 }
 
+export function updateClient(id, client) {
+    return fetch(`${BASE_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(client)
+    }).then(response => response.json());
+}
+
 export function deleteClient(id) {
     return fetch(`${BASE_URL}/${id}`, {
         method: "DELETE"

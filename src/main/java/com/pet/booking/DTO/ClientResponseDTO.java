@@ -2,6 +2,7 @@ package com.pet.booking.DTO;
 
 public class ClientResponseDTO {
     private Long id;
+
     private String name;
     private String contact;
 
