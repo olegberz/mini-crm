@@ -4,63 +4,93 @@ import "./App.css";
 
 const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
-fetch(`${apiUrl}/api/endpoint`)
-    .then(res => res.json())
-    .then(data => console.log(data));
-
-
 function App() {
     const [clients, setClients] = useState([]);
     const [name, setName] = useState("");
     const [contact, setContact] = useState("");
+    const [address, setAddress] = useState("");
     const [editingId, setEditingId] = useState(null);
 
     useEffect(() => {
-        getAllClients()
-            .then(setClients)
-            .catch(console.error);
+        refreshClients();
     }, []);
+
+    const refreshClients = () => {
+        getAllClients()
+            .then(data => {
+                console.log("Clients from backend:", data);
+                setClients(data);
+            })
+            .catch(console.error);
+    };
 
     function resetForm() {
         setName("");
         setContact("");
+        setAddress("");
         setEditingId(null);
     }
 
     function handleSubmit() {
-        if (!name.trim() || !contact.trim()) {
+        if (!name.trim() || !contact.trim() || !address.trim()) {
             alert("Fields can't be empty");
             return;
         }
-
         if (name.length < 2 || name.length > 12) {
-            alert("Name can't be shorter then 2 letters, or longer than 12")
+            alert("Name must be 2-12 letters");
             return;
         }
-
         if (contact.length < 2 || contact.length > 24) {
-            alert("Contact can't be shorter then 2, or longer than ")
+            alert("Contact must be 2-24 characters");
             return;
         }
-
+        if (address.length < 2 || address.length > 32) {
+            alert("Contact must be 2-24 characters");
+            return;
+        }
 
         if (editingId) {
-            updateClient(editingId, { name, contact }).then(updated => {
+            updateClient(editingId, { name, contact, address }).then(updated => {
                 setClients(clients.map(c => c.id === updated.id ? updated : c));
                 resetForm();
             });
         } else {
-            createClient({ name, contact }).then(newClient => {
+            createClient({ name, contact, address }).then(newClient => {
                 setClients([...clients, newClient]);
                 resetForm();
             });
         }
     }
 
+    const DownloadButton = ({ client }) => {
+        const downloadFile = async () => {
+            try {
+                const response = await fetch(`${apiUrl}/clients/download/${client.id}`);
+                if (!response.ok) throw new Error("Failed to fetch client data");
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", `client_${client.id}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                window.URL.revokeObjectURL(url);
+            } catch (err) {
+                console.error("Download error:", err);
+                alert("Download error.");
+            }
+        };
+
+        return <button onClick={downloadFile}>Download</button>;
+    };
+
     function handleEdit(client) {
         setEditingId(client.id);
         setName(client.name);
         setContact(client.contact);
+        setAddress(client.address);
     }
 
     function handleDelete(id) {
@@ -85,6 +115,11 @@ function App() {
                     value={contact}
                     onChange={e => setContact(e.target.value)}
                 />
+                <input
+                    placeholder="Adress"
+                    value={address}
+                    onChange={e => setAddress(e.target.value)}
+                />
                 <button className="main" onClick={handleSubmit}>
                     {editingId ? "Update" : "Add"}
                 </button>
@@ -101,10 +136,12 @@ function App() {
                         <div>
                             <strong>{client.name}</strong>
                             <div>{client.contact}</div>
+                            <div>{client.address}</div>
                         </div>
                         <div className="actions">
                             <button onClick={() => handleEdit(client)}>Edit</button>
                             <button className="delete" onClick={() => handleDelete(client.id)}>❌</button>
+                            <DownloadButton client={client} />
                         </div>
                     </li>
                 ))}

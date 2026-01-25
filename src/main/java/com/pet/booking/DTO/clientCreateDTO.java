@@ -11,12 +11,15 @@ public class ClientCreateDTO {
     @Size(min = 2, max = 24)
     private String contact;
 
+    private String address;
+
     public ClientCreateDTO() {
     }
 
-    public ClientCreateDTO(String name, String contact) {
+    public ClientCreateDTO(Long id, String name, String contact, String address) {
         this.name = name;
         this.contact = contact;
+        this.address = address;
     }
 
     public String getName() {
@@ -33,5 +36,13 @@ public class ClientCreateDTO {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

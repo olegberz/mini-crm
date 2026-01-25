@@ -26,7 +26,8 @@ public class ClientService {
             dto.add(new ClientResponseDTO(
                     client.getId(),
                     client.getName(),
-                    client.getContact()
+                    client.getContact(),
+                    client.getAddress()
             ));
         }
         return dto;
@@ -42,6 +43,7 @@ public class ClientService {
         Client client = new Client();
         client.setName(createDTO.getName());
         client.setContact(createDTO.getContact());
+        client.setAddress(createDTO.getAddress());
         return clientRepository.save(client);
     }
 
@@ -62,6 +64,30 @@ public class ClientService {
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Client not found"));
         clientRepository.delete(client);
+    }
+
+    public static class FileData {
+        private final String fileName;
+        private final byte[] data;
+
+        public FileData(String fileName, byte[] data) {
+            this.fileName = fileName;
+            this.data = data;
+        }
+
+        public String getFileName() { return fileName; }
+        public byte[] getData() { return data; }
+    }
+
+    public List<ClientResponseDTO> getAllClients() {
+        return clientRepository.findAll().stream()
+                .map(client -> new ClientResponseDTO(
+                        client.getId(),
+                        client.getName(),
+                        client.getContact(),
+                        client.getAddress()
+                ))
+                .toList();
     }
 
 
