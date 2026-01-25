@@ -4,6 +4,7 @@ import com.pet.booking.DTO.ClientResponseDTO;
 import com.pet.booking.DTO.ClientCreateDTO;
 import com.pet.booking.Entity.Client;
 import com.pet.booking.Repository.ClientRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class ClientService {
     }
 
     @Transactional
-    public Client createClient(ClientCreateDTO createDTO) {
+    public Client createClient(@NotNull ClientCreateDTO createDTO) {
         Client client = new Client();
         client.setName(createDTO.getName());
         client.setContact(createDTO.getContact());
@@ -45,7 +46,7 @@ public class ClientService {
     }
 
     @Transactional
-    public Client updateClient(Long id, ClientCreateDTO createDTO) {
+    public Client updateClient(Long id, @NotNull ClientCreateDTO createDTO) {
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Client not found"));
 

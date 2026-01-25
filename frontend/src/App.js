@@ -2,6 +2,13 @@ import { getAllClients, createClient, deleteClient, updateClient } from "./Clien
 import { useEffect, useState } from "react";
 import "./App.css";
 
+const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8080";
+
+fetch(`${apiUrl}/api/endpoint`)
+    .then(res => res.json())
+    .then(data => console.log(data));
+
+
 function App() {
     const [clients, setClients] = useState([]);
     const [name, setName] = useState("");

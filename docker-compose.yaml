@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  mysql-docker:
+    image: mysql:latest
+    container_name: mysql-docker
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydatabase
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  backend-docker:
+    build: .
+    container_name: backend-docker
+    depends_on:
+      - mysql-docker
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-docker:3306/mydatabase
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+  frontend-docker:
+    build: ./frontend
+    container_name: frontend-docker
+    depends_on:
+      - backend-docker
+    ports:
+      - "3000:80"
+    environment:
+      REACT_APP_API_URL: http://backend-docker:8080
+
+
+volumes:
+  mysql-data:
