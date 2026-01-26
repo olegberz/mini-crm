@@ -51,20 +51,25 @@ public class ClientController {
     public ResponseEntity<byte[]> downloadClient(@PathVariable Long id) {
         Client client = clientService.findById(id);
 
-        String data = "ID;Name;Contact;Address\n" +
-                client.getId() + ";\"" + client.getName() + "\";\"" + client.getContact() + "\";\"" + client.getAddress();
+        String data =
+                "ID;Name;Contact;Address\n" +
+                        client.getId() + ";" +
+                        "\"" + client.getName() + "\";" +
+                        "\"" + client.getContact() + "\";" +
+                        "\"" + client.getAddress() + "\"";
 
         byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setContentType(MediaType.TEXT_PLAIN);
         headers.setContentDisposition(
                 ContentDisposition.attachment()
-                        .filename("client_" + client.getId() +  ".csv")
+                        .filename("client_" + client.getId() + ".csv")
                         .build()
         );
 
         return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
+
 
 }

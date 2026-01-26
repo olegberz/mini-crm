@@ -61,6 +61,5 @@ li.client-card div.actions button {
 }
 
 li.client-card div.actions button.delete {
-    background: transparent;
     color: #dc3545;
 }

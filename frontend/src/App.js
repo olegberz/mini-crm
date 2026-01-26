@@ -140,7 +140,7 @@ function App() {
                         </div>
                         <div className="actions">
                             <button onClick={() => handleEdit(client)}>Edit</button>
-                            <button className="delete" onClick={() => handleDelete(client.id)}>❌</button>
+                            <button className="delete" onClick={() => handleDelete(client.id)}>Delete</button>
                             <DownloadButton client={client} />
                         </div>
                     </li>
