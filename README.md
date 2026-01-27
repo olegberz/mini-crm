@@ -9,3 +9,37 @@ It's a learning project developed on Spring Boot. At first there was idea to mak
 2. Update/Edit client
 3. Delete client
 4. Download client data
+
+## Architecture
+#### Here it's in classical way, laayer type:
+
+1. Controller - HTTP request handler
+2. Service - buisness-logic
+3. Reository - work with databse
+4. Entitty - data model
+
+## Tools
+
+Java 17
+Spring Boot
+Spring Web
+Spring Data JPA
+Hibernate
+MYSQL
+React
+Docker
+
+## Quickstart
+
+### 1. Clone repository
+```bash
+git clone https://github.com/olegberz/mini-crm.git
+cd mini-crm
+```
+### 2. Setup Maven Apache
+
+ Download Apache Maven latest community version from [here](https://maven.apache.org/download.cgi).
+ (Or you can just use Maven wrapepr)
+ $ mvn clean package -DskipTests
+ $ docker=compose build
+ $ docker-compose up -d
