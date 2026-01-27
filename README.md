@@ -47,5 +47,5 @@ $ cd mini-crm
  $ docker=compose build
  $ docker-compose up -d
  ```
-### Now you can look your application on 
+#### Now you can look your application on [localhost:3000](http://localhost:3000)
 
