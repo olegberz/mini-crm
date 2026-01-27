@@ -31,15 +31,21 @@ Docker
 
 ## Quickstart
 
-### 1. Clone repository
+### 1. **Clone repository**
 ```bash
-git clone https://github.com/olegberz/mini-crm.git
-cd mini-crm
+$ git clone https://github.com/olegberz/mini-crm.git
+$ cd mini-crm
 ```
-### 2. Setup Maven Apache
+### 2. **Setup Maven Apache**
 
  Download Apache Maven latest community version from [here](https://maven.apache.org/download.cgi).
  (Or you can just use Maven wrapepr)
+
+## 3. Run project
+ ```md
  $ mvn clean package -DskipTests
  $ docker=compose build
  $ docker-compose up -d
+ ```
+### Now you can look your application on 
+
