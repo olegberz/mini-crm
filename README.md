@@ -12,7 +12,7 @@ The main goal of this project is to practice core Spring concepts such as:
 
 ---
 
-## ⚙️ Functionality
+##  Functionality
 - Create a client
 - Edit/update client data
 - Delete a client
@@ -30,7 +30,7 @@ The application follows a classic layered architecture:
 
 ---
 
-## 🛠️ Technologies
+## Tools used
 - Java 17
 - Spring Boot
 - Spring Web
@@ -62,10 +62,12 @@ docker-compose up -d
 ```
 ### 4️⃣ Open the application
 
-#### Frontend is available at:
+##### Frontend is available at:
 ```bash
 http://localhost:3000
 ```
+## Notes
 
+This project is created for learning purposes and may be extended in the future.
 
 
