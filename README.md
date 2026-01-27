@@ -2,7 +2,7 @@
 
 ## Description
 CRM Mini is a learning project built with Spring Boot.  
-Initially, the idea was to create a booking application, but during development it evolved into a lightweight CRM system for managing client data.
+Initially, the idea was to create a booking application, but during development I made it into a light version od CRM system for managing client data.
 
 The main goal of this project is to practice core Spring concepts such as:
 - layered architecture
