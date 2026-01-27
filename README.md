@@ -44,13 +44,13 @@ The application follows a classic layered architecture:
 
 ##  Quick Start
 
-### 1️⃣ Clone the repository
+### 1️⃣ Clone the repository in IDE
 ```bash
 git clone https://github.com/olegberz/mini-crm.git
 cd mini-crm
 ```
 ### 2️⃣ Build the project
-#### You can use Maven Wrapper (recommended) or local Maven.
+#### You can use [Maven Wrapper](https://maven.apache.org/tools/wrapper/) (recommended) or local [Maven](https://maven.apache.org/download.cgi).
 ```bash
 mvn clean package -DskipTests
 ```
